@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import database from '../firebase';
+
 export const CREATE_POST = 'CREATE_POST';
 export const FETCH_POST = 'FETCH_POST';
 export const FETCH_POSTS = 'FETCH_POSTS';
@@ -9,14 +11,11 @@ const ROOT_URL = 'https://reduxblog.herokuapp.com/api';
 const API_KEY = '?key=blibbity-blabbity'
 
 export function fetchPosts() {
-  const request = axios.get(`${ROOT_URL}/posts${API_KEY}`);
-
   return (dispatch) => {
-    request
-    .then(({data}) => {
+    return database.ref('/posts').on('value', (snapshot) => {
       dispatch({
         type: FETCH_POSTS,
-        payload: data,
+        payload: snapshot.val(),
       });
     });
   };
