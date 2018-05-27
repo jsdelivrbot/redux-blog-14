@@ -11,9 +11,13 @@ const API_KEY = '?key=blibbity-blabbity'
 export function fetchPosts() {
   const request = axios.get(`${ROOT_URL}/posts${API_KEY}`);
 
-  return {
-    type: FETCH_POSTS,
-    payload: request,
+  return (dispatch) => {
+    request.then(({data}) => {
+      dispatch({
+        type: FETCH_POSTS,
+        payload: request,
+      });
+    });
   };
 }
 
