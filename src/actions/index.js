@@ -16,7 +16,7 @@ export function fetchPosts() {
     .then(({data}) => {
       dispatch({
         type: FETCH_POSTS,
-        payload: request,
+        payload: data,
       });
     });
   };
@@ -30,7 +30,7 @@ export function createPost(values, callback) {
     .then(({data}) => {
       dispatch({
         type: CREATE_POST,
-        payload: request,
+        payload: data,
       });
     })
     .finally(() => callback());
@@ -45,7 +45,7 @@ export function fetchPost(id) {
     .then(({data}) => {
       dispatch({
         type: FETCH_POST,
-        payload: request,
+        payload: data,
       });
     });
   };
@@ -53,10 +53,15 @@ export function fetchPost(id) {
 
 export function deletePost(id, callback) {
   const request = axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`)
-    .then(() => callback());
 
-  return {
-    type: DELETE_POST,
-    payload: id,
+  return (dispatch) => {
+    request
+    .then(({data}) => {
+      dispatch({
+        type: DELETE_POST,
+        payload: data,
+      });
+    })
+    .finally(() => callback());
   };
 }
