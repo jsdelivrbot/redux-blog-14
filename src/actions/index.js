@@ -22,17 +22,23 @@ export function fetchPosts() {
 }
 
 export function createPost(values, callback) {
-  const request = axios.post(`${ROOT_URL}/posts${API_KEY}`, values)
-
   return (dispatch) => {
-    request
-    .then(({data}) => {
-      dispatch({
-        type: CREATE_POST,
-        payload: data,
-      });
-    })
-    .finally(() => callback());
+    return database.ref('/posts').push(values)
+      .then((response) => {
+        // captures the firebase-generated unique ID
+        const newPostKey = response.key;
+        // updates the object ID with this key
+        database.ref('/posts').child(newPostKey).update({'id': newPostKey})
+          .then(() => {
+            // updates the front-end state object
+            values['id'] = newPostKey;
+            dispatch({
+              type: CREATE_POST,
+              payload: values,
+            });
+          });
+      })
+      .finally(() => callback());
   };
 }
 
