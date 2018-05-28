@@ -31,7 +31,6 @@
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "babel-preset-stage-1": "^6.1.18",
     "firebase": "^5.0.4",
     "foreman": "^3.0.0",
