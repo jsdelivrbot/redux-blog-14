@@ -43,14 +43,11 @@ export function createPost(values, callback) {
 }
 
 export function fetchPost(id) {
-  const request = axios.get(`${ROOT_URL}/posts/${id}${API_KEY}`);
-
   return (dispatch) => {
-    request
-    .then(({data}) => {
+    return database.ref('/posts').child(id).on('value', (snapshot) => {
       dispatch({
         type: FETCH_POST,
-        payload: data,
+        payload: snapshot.val(),
       });
     });
   };

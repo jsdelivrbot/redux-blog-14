@@ -7,7 +7,7 @@ export default function(state = {}, action) {
   case DELETE_POST:
     return _.omit(state, action.payload);
   case FETCH_POST:
-    return { ...state, [action.payload.id]: action.payload.data };
+    return { ...state, [action.payload.id]: action.payload };
   case FETCH_POSTS:
     return _.mapKeys(action.payload, 'id');
   default:
