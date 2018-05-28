@@ -57,16 +57,14 @@ export function fetchPost(id) {
 }
 
 export function deletePost(id, callback) {
-  const request = axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`)
-
   return (dispatch) => {
-    request
-    .then(({data}) => {
-      dispatch({
-        type: DELETE_POST,
-        payload: data,
-      });
-    })
-    .finally(() => callback());
+    return database.ref('/posts').child(id).remove()
+      .then(() => {
+        dispatch({
+          type: DELETE_POST,
+          payload: id,
+        })
+      })
+      .finally(() => callback());
   };
 }
