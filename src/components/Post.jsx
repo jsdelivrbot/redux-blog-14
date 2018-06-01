@@ -16,7 +16,7 @@ class Post extends Component {
       <li className="list-group-item">
         <input
           type="checkbox"
-          checked={_.contains(this.props.selectedPostIds, this.props.post.id)}
+          checked={_.includes(this.props.selectedPostIds, this.props.post.id)}
           onChange={this.toggle.bind(this, this.props.post)}
         />
         <Link to={`/posts/${this.props.post.id}`}>

@@ -7,7 +7,7 @@ const selectedPostsSelector = state => state.selectedPostIds;
 
 const getSelectedPosts = (posts, selectedPostIds) => {
   return _.filter(posts, (post) => {
-    return _.contains(selectedPostIds, post.id);
+    return _.includes(selectedPostIds, post.id);
   });
 };
 
