@@ -3,25 +3,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { fetchPosts } from '../actions';
+import Post from './Post';
 
 class PostsIndex extends Component {
   componentWillMount() {
     this.props.fetchPosts();
   }
 
-  renderPosts() {
-    return _.map(this.props.posts, (post) => {
-      return (
-        <li className="list-group-item" key={post.id}>
-          <Link to={`/posts/${post.id}`}>
-            {post.title}
-          </Link>
-        </li>
-      );
-    });
-  }
-
   render() {
+    console.log('selected ids', this.props.selectedPostIds);
     return (
       <div>
         <div className="text-xs-right">
@@ -31,15 +21,26 @@ class PostsIndex extends Component {
         </div>
         <h3>Posts</h3>
         <ul className="list-group">
-          {this.renderPosts()}
+          {
+            _.map(this.props.posts, (post) => {
+              return <Post post={post} key={post.id} />;
+            })
+          }
         </ul>
       </div>
     );
   }
 }
 
+PostsIndex.defaultProps = {
+  selectedPostIds: []
+};
+
 function mapStateToProps(state) {
-  return { posts: state.posts };
+  return {
+    posts: state.posts,
+    selectedPostIds: state.selectedPostIds,
+  };
 }
 
 export default connect(mapStateToProps, { fetchPosts })(PostsIndex);

@@ -4,6 +4,8 @@ export const CREATE_POST = 'CREATE_POST';
 export const FETCH_POST = 'FETCH_POST';
 export const FETCH_POSTS = 'FETCH_POSTS';
 export const DELETE_POST = 'DELETE_POST';
+export const SELECT_POST = 'SELECT_POST';
+export const DESELECT_POST = 'DESELECT_POST';
 
 export function fetchPosts() {
   return (dispatch) => {
@@ -58,5 +60,19 @@ export function deletePost(id, callback) {
         })
       })
       .finally(() => callback());
+  };
+}
+
+export function selectPost(id) {
+  return {
+    type: SELECT_POST,
+    payload: id,
+  };
+}
+
+export function deselectPost(id) {
+  return {
+    type: DESELECT_POST,
+    payload: id,
   };
 }
