@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { fetchPosts } from '../actions';
 import Post from './Post';
+import SelectedPostsList from './SelectedPostsList';
 
 class PostsIndex extends Component {
   componentWillMount() {
@@ -11,7 +12,6 @@ class PostsIndex extends Component {
   }
 
   render() {
-    console.log('selected ids', this.props.selectedPostIds);
     return (
       <div>
         <div className="text-xs-right">
@@ -19,6 +19,9 @@ class PostsIndex extends Component {
             Add a Post
           </Link>
         </div>
+        <h3>Favorite Posts</h3>
+        <SelectedPostsList />
+        <hr />
         <h3>Posts</h3>
         <ul className="list-group">
           {
